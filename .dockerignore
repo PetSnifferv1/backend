@@ -1,0 +1,28 @@
+# Ignora dependências do Node, caso tenha front-end junto
+node_modules
+
+# Ignora arquivos de controle de versão
+.git
+.gitignore
+
+# Ignora arquivos de log
+*.log
+
+# Ignora arquivos de build locais
+target/
+build/
+
+# Ignora arquivos temporários e IDEs
+*.iml
+.idea/
+.vscode/
+*.swp
+*.bak
+*.tmp
+
+# Ignora arquivos de sistema
+.DS_Store
+Thumbs.db
+
+# Ignora credenciais ou configs sensíveis (caso tenha)
+.env
