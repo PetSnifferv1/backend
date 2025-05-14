@@ -37,9 +37,8 @@ public class Pet {
     private String rua;
     private String location;
 
-    @Column(name = "embedding", columnDefinition = "vector")
-    @Convert(converter = FloatListConverter.class)
-    private List<Float> embedding ;
+    @Transient
+    private List<Float> embedding;
 
     public Pet(PetRequestDTO dto) {
         this.nome       = dto.nome();

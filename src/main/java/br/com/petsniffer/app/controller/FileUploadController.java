@@ -26,7 +26,7 @@ public class FileUploadController {
 
     private final StorageService storageService;
     private AmazonS3 s3Client;
-    private final String bucketName = "encontrepetsfotos";
+    private final String bucketName = "petsniffer";
 
     public FileUploadController(StorageService storageService) {
         this.storageService = storageService;

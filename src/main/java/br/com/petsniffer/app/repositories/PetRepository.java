@@ -33,8 +33,7 @@ public interface PetRepository extends JpaRepository<Pet, String> {
             "p.cidade = :cidade , " +
             "p.bairro = :bairro , " +
             "p.rua = :rua , " +
-            "p.location = :location, " +
-            "p.embedding = :embedding " +
+            "p.location = :location " +
             "WHERE p.id = :id")
 
     void updateById(String id,
@@ -50,8 +49,7 @@ public interface PetRepository extends JpaRepository<Pet, String> {
                     String cidade,
                     String bairro,
                     String rua,
-                    String location,
-                    String embedding);
+                    String location);
 
     @Transactional
     @Modifying

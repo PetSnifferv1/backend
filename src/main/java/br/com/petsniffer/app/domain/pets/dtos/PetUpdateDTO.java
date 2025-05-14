@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Builder
 @Data
@@ -24,5 +25,5 @@ public class PetUpdateDTO {
     private String bairro;
     private String rua;
     private String location;
-    private String embedding;}
+    private List<Float> embedding;}
 

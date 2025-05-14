@@ -1,40 +1,45 @@
 package br.com.petsniffer.app.converter;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
+import org.postgresql.util.PGobject;
 
-import java.io.IOException;
+import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
-@Converter(autoApply = true)
-public class FloatListConverter implements AttributeConverter<List<Float>, String> {
-    
-    private static final ObjectMapper objectMapper = new ObjectMapper();
-    
+@Converter
+public class FloatListConverter implements AttributeConverter<List<Float>, Object> {
+
     @Override
-    public String convertToDatabaseColumn(List<Float> attribute) {
-        if (attribute == null) {
+    public Object convertToDatabaseColumn(List<Float> attribute) {
+        if (attribute == null || attribute.isEmpty()) {
             return null;
         }
+        String value = "[" + attribute.stream()
+                .map(String::valueOf)
+                .collect(Collectors.joining(",")) + "]";
         try {
-            return objectMapper.writeValueAsString(attribute);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException("Erro ao converter lista para JSON", e);
+            PGobject obj = new PGobject();
+            obj.setType("vector");
+            obj.setValue(value);
+            return obj;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
-    
+
     @Override
-    public List<Float> convertToEntityAttribute(String dbData) {
+    public List<Float> convertToEntityAttribute(Object dbData) {
         if (dbData == null) {
             return null;
         }
-        try {
-            return objectMapper.readValue(dbData, new TypeReference<List<Float>>() {});
-        } catch (IOException e) {
-            throw new RuntimeException("Erro ao converter JSON para lista", e);
-        }
+        String data = dbData.toString();
+        String[] values = data.substring(1, data.length() - 1).split(",");
+        return Arrays.stream(values)
+                .map(String::trim)
+                .map(Float::parseFloat)
+                .collect(Collectors.toList());
     }
 } 

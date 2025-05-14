@@ -119,8 +119,7 @@ public class PetController {
                 body.getCidade(),
                 body.getBairro(),
                 body.getRua(),
-                body.getLocation(),
-                body.getEmbedding()
+                body.getLocation()
         );
 
         // Consultar novamente para retornar ao cliente

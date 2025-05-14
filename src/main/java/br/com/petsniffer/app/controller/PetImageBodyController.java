@@ -35,7 +35,7 @@ import java.util.UUID;
         PetRepository petRepository;
 
         private AmazonS3 s3Client;
-        private final String bucketName = "encontrepetsfotos";
+        private final String bucketName = "petsniffer";
 
         public PetImageBodyController(StorageService storageService) {
             this.storageService = storageService;
@@ -59,6 +59,7 @@ import java.util.UUID;
                                            @RequestParam("location") String location,
                                            RedirectAttributes redirectAttributes) throws IOException {
 
+            System.out.println("@PostMapping(fileup)");
             // Gera o ID do pet
             String petId = UUID.randomUUID().toString();
 
@@ -78,13 +79,25 @@ import java.util.UUID;
             String fileName = petId + fileExtension;
 
             // Define o caminho da imagem no bucket S3
-            String s3Key = "in/" + fileName;
+            //String s3Key = "in/" + fileName;
+            String s3Key = fileName;
 
             // Envia o arquivo para o bucket S3
             InputStream inputStream = file.getInputStream();
             ObjectMetadata metadata = new ObjectMetadata();
             metadata.setContentLength(file.getSize());
-            s3Client.putObject(bucketName, s3Key, inputStream, metadata);
+            //s3Client.putObject(bucketName, s3Key, inputStream, metadata);
+
+            try {
+                s3Client.putObject(bucketName, s3Key, inputStream, metadata);
+                System.out.println("Upload realizado com sucesso: " + s3Key);
+                // Ou retorne uma resposta de sucesso para o frontend
+            } catch (Exception e) {
+                System.err.println("Erro ao fazer upload para o S3: " + e.getMessage());
+                e.printStackTrace();
+                // Aqui você pode lançar uma exceção customizada ou retornar erro para o frontend
+            }
+
 
             // Obtém a URL da imagem
             String imageUrl = s3Client.getUrl(bucketName, s3Key).toString();
