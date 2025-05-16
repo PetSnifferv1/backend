@@ -6,8 +6,9 @@ on:
       - main
     paths:
 
-      - 'backend/**'
+      - 'backend/**' ### Teste Actions
       - '.github/workflows/deploy-backend.yml'
+      - 'backend\Dockerfile'
 
 jobs:
   deploy:

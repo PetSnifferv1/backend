@@ -20,6 +20,10 @@ build/
 *.bak
 *.tmp
 
+
+
+.git/
+
 # Ignora arquivos de sistema
 .DS_Store
 Thumbs.db
