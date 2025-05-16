@@ -1,24 +1,22 @@
-
-# Etapa 1: Compilação
+# Etapa 1: build com Maven e JDK
 FROM maven:3.9.4-eclipse-temurin-17 AS build
 WORKDIR /app
 
-# Copia apenas os arquivos necessários para resolver dependências
 COPY pom.xml .
 COPY .mvn .mvn
 COPY mvnw .
 
 RUN chmod +x mvnw
-
-# Baixa as dependências e compila o projeto (usa cache se nada mudou)
-#RUN ./mvnw clean install
-
-# Baixa as dependências (usa cache se nada mudou)
 RUN ./mvnw dependency:go-offline
-
-# Copia o código-fonte restante
 COPY src ./src
+RUN ./mvnw clean install
 
-# Compila o projeto e gera o .jar
-RUN ./mvnw clean package
+# Etapa 2: runtime com JRE mais leve
+FROM eclipse-temurin:17-jre-alpine
+WORKDIR /app
 
+COPY --from=build /app/target/*.jar app.jar
+
+EXPOSE 8080
+
+ENTRYPOINT ["java", "-jar", "app.jar"]
