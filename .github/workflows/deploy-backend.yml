@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - 'Backend/**'  # Só dispara se houver push no diretório Backend - Execc
+
       - 'backend/**'
       - '.github/workflows/deploy-backend.yml'
 
