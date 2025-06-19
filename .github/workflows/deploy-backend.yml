@@ -8,7 +8,7 @@ on:
 
       - 'backend/**' ### Teste Actions x2
       - '.github/workflows/deploy-backend.yml'
-      - 'backend\Dockerfile'
+      - 'backend/Dockerfile'
 
 jobs:
   deploy:
