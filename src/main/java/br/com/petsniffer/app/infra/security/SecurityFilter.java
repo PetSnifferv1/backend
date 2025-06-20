@@ -28,10 +28,10 @@ public class SecurityFilter extends OncePerRequestFilter {
         String path = request.getRequestURI();
 
         // Ignorar autenticação para rotas públicas
-        if (path.startsWith("/auth/register") || path.startsWith("/auth/login")) {
-            filterChain.doFilter(request, response);
-            return;
-        }
+       // if (path.startsWith("/auth/register") || path.startsWith("/auth/login")) {
+       //     filterChain.doFilter(request, response);
+         //   return;
+        //}
 
         var token = this.recoverToken(request);
         if(token != null){

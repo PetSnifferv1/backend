@@ -1,6 +1,6 @@
 package br.com.petsniffer.app.domain.pets;
 
-import br.com.petsniffer.app.converter.FloatListConverter;
+
 import br.com.petsniffer.app.domain.pets.dtos.PetRequestDTO;
 import jakarta.persistence.*;
 import lombok.*;

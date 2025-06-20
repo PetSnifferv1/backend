@@ -64,8 +64,8 @@ public class SecurityConfigurations {
                          "http://petsniffer-alb-298396905.us-east-1.elb.amazonaws.com:5173"
                             
                     ));
-                    //corsConfiguration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-                    corsConfiguration.setAllowedMethods(List.of("*"));
+                    corsConfiguration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+                    //corsConfiguration.setAllowedMethods(List.of("*"));
                     corsConfiguration.setAllowedHeaders(List.of("*"));
                     corsConfiguration.setExposedHeaders(List.of("Authorization", "Content-Type")); // Adicione se precisar expor headers
                     corsConfiguration.setAllowCredentials(true);
