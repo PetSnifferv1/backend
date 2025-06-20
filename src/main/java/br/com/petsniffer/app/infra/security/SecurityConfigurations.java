@@ -40,6 +40,7 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.OPTIONS, "auth/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "auth/register").permitAll()
+                        .requestMatchers(HttpMethod.OPTIONS, "auth/register").permitAll()
                         .requestMatchers(HttpMethod.POST, "pets/alter-pets/").permitAll()
                         .requestMatchers(HttpMethod.PUT, "pets/alter-pets/").permitAll()
                         .requestMatchers(HttpMethod.DELETE, "pets/delete-pets").permitAll()
