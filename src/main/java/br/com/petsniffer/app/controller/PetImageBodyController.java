@@ -26,7 +26,7 @@ import java.util.UUID;
 
 //@Controller
     @RestController()
-    @RequestMapping("pets")
+    @RequestMapping()
     public class PetImageBodyController {
 
         private final StorageService storageService;
