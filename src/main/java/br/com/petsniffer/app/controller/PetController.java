@@ -31,7 +31,7 @@ public class PetController {
     @Autowired
     PetRepository petRepository;
     private AmazonS3 s3Client;
-    private final String bucketName = "encontrepetsfotos";
+    private final String bucketName = "petsniffer";
 
     @PermitAll
     @PostMapping("/create-pets")
