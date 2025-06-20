@@ -48,7 +48,8 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.GET, "/pets/search-by-location/**").permitAll()
 
                         // Liberação do actuator (health check)
-                        .requestMatchers("/actuator/health", "/actuator/info").permitAll()
+                        .requestMatchers("/actuator/**").permitAll()
+
 
                         .anyRequest().authenticated()
                 )
