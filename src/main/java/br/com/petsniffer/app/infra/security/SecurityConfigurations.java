@@ -56,6 +56,8 @@ public class SecurityConfigurations {
                             "http://localhost:5173",
                             "http://petsniffer.com.br:5173",
                             "http://petsniffer.com.br",
+                            "http://www.petsniffer.com.br",
+                            "http://www.petsniffer.com.br:5173",
                             "http://petsniffer-alb-298396905.us-east-1.elb.amazonaws.com",
                             "http://petsniffer-alb-298396905.us-east-1.elb.amazonaws.com:5173"
                     ));
