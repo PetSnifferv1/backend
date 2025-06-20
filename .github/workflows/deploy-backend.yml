@@ -1,4 +1,4 @@
-name: Deploy Backend to AWS x
+name: Deploy Backend to AWS
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - main
     paths:
 
-      - 'backend/**' ### Teste Actions x
+      - 'backend/**' ### Teste Actions
       - '.github/workflows/deploy-backend.yml'
       - 'backend/Dockerfile'
 
