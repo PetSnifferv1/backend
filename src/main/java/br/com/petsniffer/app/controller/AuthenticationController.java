@@ -19,12 +19,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.Map;
 
-@CrossOrigin(origins = {
-        "http://localhost:5173",
-        "http://petsniffer.com.br",
-        "http://www.petsniffer.com.br",
-        "http://petsniffer-alb-298396905.us-east-1.elb.amazonaws.com"
-})
 @RestController
 @RequestMapping("auth")
 public class AuthenticationController {
