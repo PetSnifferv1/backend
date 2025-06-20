@@ -19,11 +19,15 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.Map;
 
+@CrossOrigin(origins = {
+        "http://localhost:5173",
+        "http://petsniffer.com.br",
+        "http://www.petsniffer.com.br",
+        "http://petsniffer-alb-298396905.us-east-1.elb.amazonaws.com"
+})
 @RestController
-@CrossOrigin(origins = "http://localhost:5173")
 @RequestMapping("auth")
 public class AuthenticationController {
-
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -35,7 +39,7 @@ public class AuthenticationController {
 
     private AuthenticationController authenticationController;
 
-    @CrossOrigin(origins = "http://localhost:5173")
+
     @PostMapping("/login")
     public ResponseEntity<Map<String, Object>> login(@RequestBody @Valid AuthenticationDTO authRequest) {
         UsernamePasswordAuthenticationToken loginData = new UsernamePasswordAuthenticationToken(

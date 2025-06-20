@@ -81,6 +81,7 @@ public class SecurityConfigurations {
         StrictHttpFirewall firewall = new StrictHttpFirewall();
         firewall.setAllowUrlEncodedSlash(true); // Permitir barras codificadas na URL
         firewall.setAllowSemicolon(true); // Permitir ponto e vírgula na URL, se necessário
+        firewall.setAllowUrlEncodedPercent(true);
         // Adicione mais permissões conforme necessário
         return firewall;
     }
