@@ -48,8 +48,7 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.POST, "pets/upload-imagem").permitAll()
                         .requestMatchers(HttpMethod.POST, "files/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "fileup/**").permitAll()
-                        .requestMatchers(HttpMethod.POST, "register").permitAll()
-                        .requestMatchers(HttpMethod.POST, "login").permitAll()
+                        .requestMatchers(HttpMethod.POST, "pets/fileup/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "pets/search-by-location/**").permitAll()
 
                         .anyRequest().authenticated()
