@@ -52,11 +52,18 @@ public class SecurityConfigurations {
                 )
                 .cors(cors -> cors.configurationSource(request -> {
                     var corsConfiguration = new CorsConfiguration();
-                    corsConfiguration.setAllowedOrigins(List.of("http://localhost:5173"));
+                    corsConfiguration.setAllowedOrigins(List.of(
+                            "http://localhost:5173",
+                            "http://petsniffer.com.br:5173",
+                            "http://petsniffer.com.br",
+                            "http://petsniffer-alb-298396905.us-east-1.elb.amazonaws.com",
+                            "http://petsniffer-alb-298396905.us-east-1.elb.amazonaws.com:5173"
+                    ));
                     corsConfiguration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
                     corsConfiguration.setAllowedHeaders(List.of("*"));
                     corsConfiguration.setAllowCredentials(true);
                     return corsConfiguration;
+
                 }))
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
