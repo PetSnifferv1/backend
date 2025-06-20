@@ -29,25 +29,24 @@ public class SecurityConfigurations {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-        return  httpSecurity
+        return httpSecurity
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(HttpMethod.GET,  "pets/public-pets").permitAll()
-                        .requestMatchers(HttpMethod.POST, "auth/login").permitAll()
-                        .requestMatchers(HttpMethod.OPTIONS, "auth/login").permitAll()
-                        .requestMatchers(HttpMethod.POST, "auth/**").permitAll()
-                        .requestMatchers(HttpMethod.OPTIONS, "auth/**").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/**").permitAll()
-                        .requestMatchers(HttpMethod.POST, "auth/register").permitAll()
-                        .requestMatchers(HttpMethod.POST, "pets/alter-pets/").permitAll()
-                        .requestMatchers(HttpMethod.PUT, "pets/alter-pets/").permitAll()
-                        .requestMatchers(HttpMethod.DELETE, "pets/delete-pets").permitAll()
-                        .requestMatchers(HttpMethod.POST, "pets/create-pets").permitAll()
-                        .requestMatchers(HttpMethod.POST, "pets/upload-imagem").permitAll()
-                        .requestMatchers(HttpMethod.POST, "files/**").permitAll()
-                        .requestMatchers(HttpMethod.POST, "fileup/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "pets/search-by-location/**").permitAll()
+                        // Corrigindo os paths para começarem com barra "/"
+                        .requestMatchers(HttpMethod.GET, "/pets/public-pets").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
+                        .requestMatchers(HttpMethod.OPTIONS, "/auth/login").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/auth/**").permitAll()
+                        .requestMatchers(HttpMethod.OPTIONS, "/auth/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/pets/alter-pets/").permitAll()
+                        .requestMatchers(HttpMethod.PUT, "/pets/alter-pets/").permitAll()
+                        .requestMatchers(HttpMethod.DELETE, "/pets/delete-pets").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/pets/create-pets").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/pets/upload-imagem").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/files/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/fileup/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/pets/search-by-location/**").permitAll()
 
                         .anyRequest().authenticated()
                 )
@@ -61,15 +60,13 @@ public class SecurityConfigurations {
                             "http://www.petsniffer.com.br:5173",
                             "http://petsniffer-alb-298396905.us-east-1.elb.amazonaws.com",
                             "http://petsniffer-alb-298396905.us-east-1.elb.amazonaws.com:5173"
-
                     ));
-                    //corsConfiguration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
                     corsConfiguration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-                    corsConfiguration.setAllowedHeaders(List.of("*"));
-                    corsConfiguration.setExposedHeaders(List.of("Authorization", "Content-Type")); // Adicione se precisar expor headers
+                    // Defina explicitamente os headers permitidos para evitar problemas de CORS
+                    corsConfiguration.setAllowedHeaders(List.of("Authorization", "Content-Type", "Accept", "Origin", "X-Requested-With"));
+                    corsConfiguration.setExposedHeaders(List.of("Authorization", "Content-Type"));
                     corsConfiguration.setAllowCredentials(true);
                     return corsConfiguration;
-
                 }))
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
@@ -79,8 +76,7 @@ public class SecurityConfigurations {
     public HttpFirewall allowUrlEncodedSlashHttpFirewall() {
         StrictHttpFirewall firewall = new StrictHttpFirewall();
         firewall.setAllowUrlEncodedSlash(true); // Permitir barras codificadas na URL
-        firewall.setAllowSemicolon(true); // Permitir ponto e vírgula na URL, se necessário
-        // Adicione mais permissões conforme necessário
+        firewall.setAllowSemicolon(true);       // Permitir ponto e vírgula na URL
         return firewall;
     }
 
@@ -88,6 +84,7 @@ public class SecurityConfigurations {
     public WebSecurityCustomizer webSecurityCustomizer() {
         return (web) -> web.ignoring().requestMatchers("/h2-console/**");
     }
+
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
@@ -97,7 +94,5 @@ public class SecurityConfigurations {
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
-
-
 
 }

@@ -34,6 +34,13 @@ public class AuthenticationController {
     private AuthenticationController authenticationController;
 
 
+    @GetMapping("/debug-headers")
+    public ResponseEntity<String> debugHeaders(@RequestHeader Map<String, String> headers) {
+        headers.forEach((k, v) -> System.out.println(k + ": " + v));
+        return ResponseEntity.ok("Check the logs");
+    }
+
+
     @PostMapping("/login")
     public ResponseEntity<Map<String, Object>> login(@RequestBody @Valid AuthenticationDTO authRequest) {
         UsernamePasswordAuthenticationToken loginData = new UsernamePasswordAuthenticationToken(
