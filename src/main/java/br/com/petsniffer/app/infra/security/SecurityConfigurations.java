@@ -1,5 +1,7 @@
 package br.com.petsniffer.app.infra.security;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,8 +20,6 @@ import org.springframework.security.web.firewall.HttpFirewall;
 import org.springframework.security.web.firewall.StrictHttpFirewall;
 import org.springframework.web.cors.CorsConfiguration;
 
-import java.util.List;
-
 @Configuration
 @EnableWebSecurity
 public class SecurityConfigurations {
@@ -36,6 +36,7 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.GET,  "pets/public-pets").permitAll()
                         .requestMatchers(HttpMethod.POST, "auth/login").permitAll()
                         .requestMatchers(HttpMethod.OPTIONS, "auth/login").permitAll()
+                        .requestMatchers(HttpMethod.POST, "auth/**").permitAll()
                         .requestMatchers(HttpMethod.OPTIONS, "auth/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "auth/register").permitAll()
@@ -61,8 +62,10 @@ public class SecurityConfigurations {
                             "http://petsniffer-alb-298396905.us-east-1.elb.amazonaws.com",
                             "http://petsniffer-alb-298396905.us-east-1.elb.amazonaws.com:5173"
                     ));
-                    corsConfiguration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+                    //corsConfiguration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+                    corsConfiguration.setAllowedMethods(List.of("*"));
                     corsConfiguration.setAllowedHeaders(List.of("*"));
+                    corsConfiguration.setExposedHeaders(List.of("Authorization", "Content-Type")); // Adicione se precisar expor headers
                     corsConfiguration.setAllowCredentials(true);
                     return corsConfiguration;
 
