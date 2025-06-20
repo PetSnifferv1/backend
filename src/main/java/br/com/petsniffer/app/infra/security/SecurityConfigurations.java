@@ -54,21 +54,21 @@ public class SecurityConfigurations {
                 )
                 .cors(cors -> cors.configurationSource(request -> {
                     var corsConfiguration = new CorsConfiguration();
-                    corsConfiguration.setAllowedOrigins(List.of(
-                            "http://localhost:5173",
-                            "http://petsniffer.com.br:5173",
-                            "http://petsniffer.com.br",
-                            "http://www.petsniffer.com.br",
-                            "http://www.petsniffer.com.br:5173",
-                            "http://petsniffer-alb-298396905.us-east-1.elb.amazonaws.com",
-                            "http://petsniffer-alb-298396905.us-east-1.elb.amazonaws.com:5173"
+                    corsConfiguration.setAllowedOrigins(List.of("*")); // Permitir todos os domínios
+                     //       "http://localhost:5173",
+                            //       "http://petsniffer.com.br:5173",
+                            //        "http://petsniffer.com.br",
+                            //        "http://www.petsniffer.com.br",
+                            //        "http://www.petsniffer.com.br:5173",
+                            //        "http://petsniffer-alb-298396905.us-east-1.elb.amazonaws.com",
+                            //        "http://petsniffer-alb-298396905.us-east-1.elb.amazonaws.com:5173"
                             
-                    ));
+                    //));
                     //corsConfiguration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-                    corsConfiguration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+                    corsConfiguration.setAllowedMethods(List.of("*"));
                     corsConfiguration.setAllowedHeaders(List.of("*"));
                     corsConfiguration.setExposedHeaders(List.of("Authorization", "Content-Type")); // Adicione se precisar expor headers
-                    corsConfiguration.setAllowCredentials(true);
+                    //corsConfiguration.setAllowCredentials(true);
                     return corsConfiguration;
 
                 }))
