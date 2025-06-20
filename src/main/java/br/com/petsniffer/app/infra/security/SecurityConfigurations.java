@@ -33,7 +33,6 @@ public class SecurityConfigurations {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
-                        // Corrigindo os paths para começarem com barra "/"
                         .requestMatchers(HttpMethod.GET, "/pets/public-pets").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.OPTIONS, "/auth/login").permitAll()
@@ -47,6 +46,9 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.POST, "/files/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/fileup/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/pets/search-by-location/**").permitAll()
+
+                        // Liberação do actuator (health check)
+                        .requestMatchers("/actuator/health", "/actuator/info").permitAll()
 
                         .anyRequest().authenticated()
                 )
@@ -62,7 +64,6 @@ public class SecurityConfigurations {
                             "http://petsniffer-alb-298396905.us-east-1.elb.amazonaws.com:5173"
                     ));
                     corsConfiguration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-                    // Defina explicitamente os headers permitidos para evitar problemas de CORS
                     corsConfiguration.setAllowedHeaders(List.of("Authorization", "Content-Type", "Accept", "Origin", "X-Requested-With"));
                     corsConfiguration.setExposedHeaders(List.of("Authorization", "Content-Type"));
                     corsConfiguration.setAllowCredentials(true);
@@ -75,8 +76,8 @@ public class SecurityConfigurations {
     @Bean
     public HttpFirewall allowUrlEncodedSlashHttpFirewall() {
         StrictHttpFirewall firewall = new StrictHttpFirewall();
-        firewall.setAllowUrlEncodedSlash(true); // Permitir barras codificadas na URL
-        firewall.setAllowSemicolon(true);       // Permitir ponto e vírgula na URL
+        firewall.setAllowUrlEncodedSlash(true);
+        firewall.setAllowSemicolon(true);
         return firewall;
     }
 
