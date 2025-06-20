@@ -28,47 +28,54 @@ public class SecurityConfigurations {
     private SecurityFilter securityFilter;
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity ) throws Exception {
         return  httpSecurity
-                .csrf(csrf -> csrf.disable())
+                .csrf(csrf -> csrf.disable( ))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(HttpMethod.GET,  "pets/public-pets").permitAll()
-                        .requestMatchers(HttpMethod.POST, "auth/login").permitAll()
-                        .requestMatchers(HttpMethod.OPTIONS, "auth/login").permitAll()
-                        .requestMatchers(HttpMethod.POST, "auth/**").permitAll()
-                        .requestMatchers(HttpMethod.OPTIONS, "auth/**").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/**").permitAll()
-                        .requestMatchers(HttpMethod.POST, "auth/register").permitAll()
-                        .requestMatchers(HttpMethod.OPTIONS, "auth/register").permitAll()
-                        .requestMatchers(HttpMethod.POST, "pets/alter-pets/").permitAll()
-                        .requestMatchers(HttpMethod.PUT, "pets/alter-pets/").permitAll()
-                        .requestMatchers(HttpMethod.DELETE, "pets/delete-pets").permitAll()
-                        .requestMatchers(HttpMethod.POST, "pets/create-pets").permitAll()
-                        .requestMatchers(HttpMethod.POST, "pets/upload-imagem").permitAll()
-                        .requestMatchers(HttpMethod.POST, "files/**").permitAll()
-                        .requestMatchers(HttpMethod.POST, "fileup/**").permitAll()
-                        .requestMatchers(HttpMethod.POST, "pets/fileup/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "pets/search-by-location/**").permitAll()
+                        // Health Check e Endpoints Públicos
+                        .requestMatchers(HttpMethod.GET, "/pets/public-pets").permitAll() // Corrigido: Adicionada a barra inicial
+                        .requestMatchers(HttpMethod.GET, "/health").permitAll() // Adicione se criar um endpoint /health
 
+                        // Endpoints de Autenticação e Registro
+                        .requestMatchers(HttpMethod.POST, "/auth/login").permitAll() // Corrigido: Adicionada a barra inicial
+                        .requestMatchers(HttpMethod.POST, "/auth/register").permitAll() // Corrigido: Adicionada a barra inicial
+                        .requestMatchers(HttpMethod.OPTIONS, "/auth/**").permitAll() // Permite OPTIONS para CORS em /auth
+
+                        // Endpoints de Upload/Manipulação de Arquivos (se realmente forem públicos)
+                        .requestMatchers(HttpMethod.POST, "/pets/alter-pets/**").permitAll() // Ajustado para cobrir subcaminhos
+                        .requestMatchers(HttpMethod.PUT, "/pets/alter-pets/**").permitAll() // Ajustado para cobrir subcaminhos
+                        .requestMatchers(HttpMethod.DELETE, "/pets/delete-pets/**").permitAll() // Ajustado para cobrir subcaminhos
+                        .requestMatchers(HttpMethod.POST, "/pets/create-pets").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/pets/upload-imagem").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/files/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/fileup/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/pets/fileup/**").permitAll()
+
+                        // Endpoints de Busca Pública
+                        .requestMatchers(HttpMethod.GET, "/pets/search-by-location/**").permitAll()
+
+                        // Remover esta linha, pois ela torna todos os POSTs públicos:
+                        // .requestMatchers(HttpMethod.POST, "/**").permitAll()
+
+                        // Qualquer outra requisição deve ser autenticada
                         .anyRequest().authenticated()
                 )
                 .cors(cors -> cors.configurationSource(request -> {
                     var corsConfiguration = new CorsConfiguration();
                     corsConfiguration.setAllowedOrigins(List.of(
-                         "http://localhost:5173",
-                         "http://petsniffer.com.br:5173",
-                         "http://petsniffer.com.br",
-                         "http://www.petsniffer.com.br",
-                         "http://www.petsniffer.com.br:5173",
-                         "http://petsniffer-alb-298396905.us-east-1.elb.amazonaws.com",
-                         "http://petsniffer-alb-298396905.us-east-1.elb.amazonaws.com:5173"
-                            
+                            "http://localhost:5173",
+                            "http://petsniffer.com.br:5173",
+                            "http://petsniffer.com.br",
+                            "http://www.petsniffer.com.br",
+                            "http://www.petsniffer.com.br:5173",
+                            "http://petsniffer-alb-298396905.us-east-1.elb.amazonaws.com",
+                            "http://petsniffer-alb-298396905.us-east-1.elb.amazonaws.com:5173"
+
                     ));
                     corsConfiguration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-                    //corsConfiguration.setAllowedMethods(List.of("*"));
                     corsConfiguration.setAllowedHeaders(List.of("*"));
-                    corsConfiguration.setExposedHeaders(List.of("Authorization", "Content-Type")); // Adicione se precisar expor headers
+                    corsConfiguration.setExposedHeaders(List.of("Authorization", "Content-Type"));
                     corsConfiguration.setAllowCredentials(true);
                     return corsConfiguration;
 
@@ -76,7 +83,6 @@ public class SecurityConfigurations {
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
-
 
 
 
