@@ -6,10 +6,10 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
-//@Configuration
+@Configuration
 public class CORSConfig {
 
-  //  @Bean
+    @Bean
     public CorsFilter corsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
@@ -17,6 +17,7 @@ public class CORSConfig {
         // Permitir requisições do domínio petsniffer.com.br
         config.addAllowedOrigin("http://petsniffer.com.br:5173");
         config.addAllowedOrigin("http://petsniffer.com.br");
+        config.addAllowedOrigin("http://www.petsniffer.com.br");
         config.addAllowedOrigin("http://petsniffer-alb-298396905.us-east-1.elb.amazonaws.com");
         config.addAllowedOrigin("http://petsniffer-alb-298396905.us-east-1.elb.amazonaws.com:5173");
         config.addAllowedOrigin("http://localhost:5173");
