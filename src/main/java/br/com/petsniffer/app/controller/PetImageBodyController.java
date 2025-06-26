@@ -35,7 +35,7 @@ import java.util.UUID;
         PetRepository petRepository;
 
         private AmazonS3 s3Client;
-        private final String bucketName = "petsniffer";
+        private final String bucketName = "petsniffer-pets";
 
         public PetImageBodyController(StorageService storageService) {
             this.storageService = storageService;
@@ -101,6 +101,8 @@ import java.util.UUID;
 
             // Obtém a URL da imagem
             String imageUrl = s3Client.getUrl(bucketName, s3Key).toString();
+
+            System.out.println("String imageUrl: " + imageUrl );
 
             // Cria o objeto Pet
             Pet newPet = new Pet();

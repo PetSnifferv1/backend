@@ -17,7 +17,9 @@ import java.util.List;
 @EqualsAndHashCode(of = "id")
 public class Pet {
     @Id
-//    @GeneratedValue(strategy = GenerationType.UUID)
+
+//    @GeneratedValue(strategy = GenerationType.UUID) // Tem que gerar o Id no momento de gerar o nome do arquivo de imagem
+    // por enquanto.. quando implemtar as melhoria e adequações devo voltar e gerar
     private String id;
     private String nome;
     private String tipo;

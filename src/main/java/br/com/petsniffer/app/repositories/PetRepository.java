@@ -82,6 +82,25 @@ public interface PetRepository extends JpaRepository<Pet, String> {
             @Param("radius")    double radius
     );
 
+    @Query(value = """
+
+            WITH target_pet AS (
+                     SELECT embedding FROM pet WHERE id = :id
+                 )
+                 SELECT p.*
+                 FROM pet p, target_pet tp
+                 WHERE p.id != :id
+                   AND p.embedding IS NOT NULL
+                   AND (p.embedding <=> tp.embedding) <= CAST(:maxDistance AS double precision)
+                 ORDER BY p.embedding <=> tp.embedding
+                 LIMIT :limite;
+    """, nativeQuery = true)
+    List<Pet> buscarSimilares(
+            @Param("id") String id,
+            @Param("maxDistance") double maxDistance,
+            @Param("limite") int limite
+    );
+
 }
 
 

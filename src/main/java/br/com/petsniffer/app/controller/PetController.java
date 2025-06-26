@@ -144,6 +144,28 @@ public class PetController {
     Pet deleted = petRepository.findById(String.valueOf(id)).orElse(null);
         return ResponseEntity.noContent().build();
     }
+
+
+
+
+    @GetMapping("/similares/{id}")
+    public ResponseEntity<List<Pet>>  searchByEmbedding(
+            @PathVariable String id,
+            @RequestParam double maxDistance,
+            @RequestParam int limite
+
+
+    ) {
+        System.out.println("===-----------------------------------------------------------------===");
+        System.out.println("Id: " + id);
+        System.out.println("Max Distance: " + maxDistance);
+        System.out.println("Limite: x" + limite);
+        System.out.println("===-----------------------------------------------------------------===");
+        List<Pet> pets = petRepository.buscarSimilares(id, maxDistance, limite);
+        return ResponseEntity.ok(pets);
+    }
+
+
 }
 
 
