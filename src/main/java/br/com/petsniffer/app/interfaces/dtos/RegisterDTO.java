@@ -1,4 +1,4 @@
-package br.com.petsniffer.app.domain.user.dtos;
+package br.com.petsniffer.app.interfaces.dtos;
 
 import br.com.petsniffer.app.domain.user.UserRole;
 import jakarta.validation.constraints.Email;

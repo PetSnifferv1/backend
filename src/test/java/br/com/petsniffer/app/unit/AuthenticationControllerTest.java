@@ -17,7 +17,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import br.com.petsniffer.app.controller.AuthenticationController;
 import br.com.petsniffer.app.domain.user.User;
 import br.com.petsniffer.app.domain.user.UserRole;
-import br.com.petsniffer.app.domain.user.dtos.RegisterDTO;
+import br.com.petsniffer.app.interfaces.dtos.RegisterDTO;
 import br.com.petsniffer.app.infra.security.TokenService;
 import br.com.petsniffer.app.repositories.UserRepository;
 

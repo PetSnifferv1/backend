@@ -34,9 +34,10 @@ public class SecurityConfigurations {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.GET, "/pets/public-pets").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/pets/search-by-location/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
                         .requestMatchers(HttpMethod.OPTIONS, "/auth/login").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/auth/**").permitAll()
                         .requestMatchers(HttpMethod.OPTIONS, "/auth/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/pets/alter-pets/").permitAll()
                         .requestMatchers(HttpMethod.PUT, "/pets/alter-pets/").permitAll()
@@ -45,7 +46,6 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.POST, "/pets/upload-imagem").permitAll()
                         .requestMatchers(HttpMethod.POST, "/files/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/fileup/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/pets/search-by-location/**").permitAll()
 
                         // Liberação do actuator (health check)
                         .requestMatchers("/actuator/**").permitAll()

@@ -1,4 +1,4 @@
-package br.com.petsniffer.app.domain.pets.dtos;
+package br.com.petsniffer.app.interfaces.dtos;
 
 import br.com.petsniffer.app.domain.pets.PetStatus;
 import lombok.Builder;
@@ -25,5 +25,6 @@ public class PetUpdateDTO {
     private String bairro;
     private String rua;
     private String location;
-    private List<Float> embedding;}
+    private List<Float> embedding;
+}
 

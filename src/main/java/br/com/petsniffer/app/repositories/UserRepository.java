@@ -1,9 +1,10 @@
 package br.com.petsniffer.app.repositories;
 
-import br.com.petsniffer.app.domain.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.security.core.userdetails.UserDetails;
+
+import br.com.petsniffer.app.domain.user.User;
 
 public interface UserRepository extends JpaRepository<User, String> {
-    UserDetails findByLogin(String login);
+    User findByLogin(String login);
+    User findByEmail(String email);
 }

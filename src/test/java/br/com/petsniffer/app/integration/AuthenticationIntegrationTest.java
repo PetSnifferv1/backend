@@ -17,8 +17,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import br.com.petsniffer.app.config.TestDatabaseConfig;
 import br.com.petsniffer.app.config.TestSecurityConfig;
 import br.com.petsniffer.app.domain.user.UserRole;
-import br.com.petsniffer.app.domain.user.dtos.AuthenticationDTO;
-import br.com.petsniffer.app.domain.user.dtos.RegisterDTO;
+import br.com.petsniffer.app.interfaces.dtos.AuthenticationDTO;
+import br.com.petsniffer.app.interfaces.dtos.RegisterDTO;
 import br.com.petsniffer.app.repositories.UserRepository;
 
 @SpringBootTest

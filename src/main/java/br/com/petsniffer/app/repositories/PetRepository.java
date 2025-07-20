@@ -58,6 +58,10 @@ public interface PetRepository extends JpaRepository<Pet, String> {
 
     @Transactional
     @Modifying
+    void deleteAllByOwnerid(String ownerid);
+
+    @Transactional
+    @Modifying
     @Query(value = """
 
             SELECT p.*,\s
@@ -85,11 +89,12 @@ public interface PetRepository extends JpaRepository<Pet, String> {
     @Query(value = """
 
             WITH target_pet AS (
-                     SELECT embedding FROM pet WHERE id = :id
+                     SELECT embedding, tipo FROM pet WHERE id = :id
                  )
                  SELECT p.*
                  FROM pet p, target_pet tp
                  WHERE p.id != :id
+                   AND p.tipo = tp.tipo  
                    AND p.embedding IS NOT NULL
                    AND (p.embedding <=> tp.embedding) <= CAST(:maxDistance AS double precision)
                  ORDER BY p.embedding <=> tp.embedding
@@ -97,6 +102,7 @@ public interface PetRepository extends JpaRepository<Pet, String> {
     """, nativeQuery = true)
     List<Pet> buscarSimilares(
             @Param("id") String id,
+            @Param("tipo") String tipo,
             @Param("maxDistance") double maxDistance,
             @Param("limite") int limite
     );

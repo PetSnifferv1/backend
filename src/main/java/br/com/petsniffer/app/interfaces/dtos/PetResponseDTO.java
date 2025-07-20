@@ -1,4 +1,4 @@
-package br.com.petsniffer.app.domain.pets.dtos;
+package br.com.petsniffer.app.interfaces.dtos;
 
 import br.com.petsniffer.app.domain.pets.Pet;
 import br.com.petsniffer.app.domain.pets.PetStatus;
