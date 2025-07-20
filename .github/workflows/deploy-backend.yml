@@ -1,4 +1,4 @@
-name: Deploy Backend to AWS x
+name: Deploy Backend to AWS
 
 on:
   push:
