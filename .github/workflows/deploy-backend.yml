@@ -41,9 +41,13 @@ jobs:
           DB_PASS_PROD: ${{ secrets.DB_PASS_PROD }}
 
 
+
         run: |
 
           ls -R .   # Debug opcional
+          --build-arg DB_USER_PROD=$DB_USER_PROD \
+          --build-arg DB_PASS_PROD=$DB_PASS_PROD \
+          --build-arg SPRING_PROFILES_ACTIVE=prod \
           docker build . --no-cache -t $REGISTRY/$REPOSITORY:$IMAGE_TAG
           docker tag $REGISTRY/$REPOSITORY:$IMAGE_TAG $REGISTRY/$REPOSITORY:latest
           docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
