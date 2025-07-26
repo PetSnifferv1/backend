@@ -58,15 +58,21 @@ public class SecurityConfigurations {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of(
-                "http://localhost:5173",
+        configuration.setAllowedOriginPatterns(List.of(
+                "http://localhost:*",
                 "http://petsniffer.com.br",
-                "http://www.petsniffer.com.br"
+                "http://www.petsniffer.com.br",
+                "http://*.petsniffer.com.br",
+                "http://petsniffer-alb-298396905.us-east-1.elb.amazonaws.com",
+                "http://*.us-east-1.elb.amazonaws.com"
         ));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("Authorization", "Content-Type", "Accept", "Origin", "X-Requested-With"));
         configuration.setExposedHeaders(List.of("Authorization", "Content-Type"));
         configuration.setAllowCredentials(true);
+
+        // Debug temporário — você pode remover depois
+        System.out.println("🔧 CORS configurado com: " + configuration.getAllowedOriginPatterns());
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
