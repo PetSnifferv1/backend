@@ -55,7 +55,7 @@ public class SecurityConfigurations {
                 )
                 .cors(cors -> cors.configurationSource(request -> {
                     var corsConfiguration = new CorsConfiguration();
-                    corsConfiguration.setAllowedOrigins(List.of(
+                    corsConfiguration.setAllowedOriginPatterns(List.of(
                             "http://localhost:5173",
                             "http://petsniffer.com.br:5173",
                             "http://petsniffer.com.br",
