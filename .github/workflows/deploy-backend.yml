@@ -18,7 +18,7 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v3
 
-      # Configuração das credenciais AWS
+      # Configuração das credenciais AWS x
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
