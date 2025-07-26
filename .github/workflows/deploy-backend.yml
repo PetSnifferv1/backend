@@ -45,10 +45,11 @@ jobs:
         run: |
 
           ls -R .   # Debug opcional
+\
+          docker build . --no-cache -t $REGISTRY/$REPOSITORY:$IMAGE_TAG
           --build-arg DB_USER_PROD=$DB_USER_PROD \
           --build-arg DB_PASS_PROD=$DB_PASS_PROD \
-          --build-arg SPRING_PROFILES_ACTIVE=prod \
-          docker build . --no-cache -t $REGISTRY/$REPOSITORY:$IMAGE_TAG
+          --build-arg SPRING_PROFILES_ACTIVE=prod
           docker tag $REGISTRY/$REPOSITORY:$IMAGE_TAG $REGISTRY/$REPOSITORY:latest
           docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
           docker push $REGISTRY/$REPOSITORY:latest          
