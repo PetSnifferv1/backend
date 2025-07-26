@@ -19,6 +19,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.security.web.firewall.HttpFirewall;
 import org.springframework.security.web.firewall.StrictHttpFirewall;
 import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 @EnableWebSecurity
@@ -37,7 +39,6 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.GET, "/pets/search-by-location/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
-                        .requestMatchers(HttpMethod.OPTIONS, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.OPTIONS, "/auth/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/pets/alter-pets/").permitAll()
                         .requestMatchers(HttpMethod.PUT, "/pets/alter-pets/").permitAll()
@@ -46,32 +47,30 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.POST, "/pets/upload-imagem").permitAll()
                         .requestMatchers(HttpMethod.POST, "/files/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/fileup/**").permitAll()
-
-                        // Liberação do actuator (health check)
                         .requestMatchers("/actuator/**").permitAll()
-
-
                         .anyRequest().authenticated()
                 )
-                .cors(cors -> cors.configurationSource(request -> {
-                    var corsConfiguration = new CorsConfiguration();
-                    corsConfiguration.setAllowedOriginPatterns(List.of(
-                            "http://localhost:5173",
-                            "http://petsniffer.com.br:5173",
-                            "http://petsniffer.com.br",
-                            "http://www.petsniffer.com.br",
-                            "http://www.petsniffer.com.br:5173",
-                            "http://petsniffer-alb-298396905.us-east-1.elb.amazonaws.com",
-                            "http://petsniffer-alb-298396905.us-east-1.elb.amazonaws.com:5173"
-                    ));
-                    corsConfiguration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-                    corsConfiguration.setAllowedHeaders(List.of("Authorization", "Content-Type", "Accept", "Origin", "X-Requested-With"));
-                    corsConfiguration.setExposedHeaders(List.of("Authorization", "Content-Type"));
-                    corsConfiguration.setAllowCredentials(true);
-                    return corsConfiguration;
-                }))
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
+    }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(List.of(
+                "http://localhost:5173",
+                "http://petsniffer.com.br",
+                "http://www.petsniffer.com.br"
+        ));
+        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        configuration.setAllowedHeaders(List.of("Authorization", "Content-Type", "Accept", "Origin", "X-Requested-With"));
+        configuration.setExposedHeaders(List.of("Authorization", "Content-Type"));
+        configuration.setAllowCredentials(true);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
     }
 
     @Bean
@@ -93,8 +92,7 @@ public class SecurityConfigurations {
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
 }
