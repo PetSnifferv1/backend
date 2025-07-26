@@ -39,7 +39,13 @@ import br.com.petsniffer.app.domain.user.User;
 import br.com.petsniffer.app.domain.pets.Pet;
 
 @Transactional
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = {
+        "http://localhost:5173",
+        "http://www.petsniffer.com.br",
+        "https://www.petsniffer.com.br",
+        "http://petsniffer-alb-298396905.us-east-1.elb.amazonaws.com"
+})
+
 @RestController()
 @RequestMapping("pets")
 public class PetController {
