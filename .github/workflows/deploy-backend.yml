@@ -6,7 +6,7 @@ on:
       - main
     paths:
 
-      - 'backend/**' ###
+      - 'backend/**' ###x
       - '.github/workflows/deploy-backend.yml'
       - 'backend/Dockerfile'
 
