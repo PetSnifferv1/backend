@@ -1,42 +1,24 @@
 package br.com.petsniffer.app.controller;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.UUID;
-
-import br.com.petsniffer.app.domain.pets.PetStatus;
-import com.amazonaws.regions.Regions;
-import com.amazonaws.services.s3.AmazonS3ClientBuilder;
-import com.amazonaws.services.s3.model.ObjectMetadata;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.amazonaws.services.s3.AmazonS3;
-
 import br.com.petsniffer.app.application.PetService;
-import br.com.petsniffer.app.interfaces.dtos.PetRequestDTO;
+import br.com.petsniffer.app.domain.pets.Pet;
+import br.com.petsniffer.app.domain.pets.PetStatus;
+import br.com.petsniffer.app.domain.user.User;
 import br.com.petsniffer.app.interfaces.dtos.PetResponseDTO;
 import br.com.petsniffer.app.interfaces.dtos.PetUpdateDTO;
+import com.amazonaws.services.s3.AmazonS3;
 import jakarta.annotation.security.PermitAll;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
-import br.com.petsniffer.app.domain.user.User;
-import br.com.petsniffer.app.domain.pets.Pet;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Transactional
 @CrossOrigin(origins = {

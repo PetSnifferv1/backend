@@ -5,7 +5,7 @@ public enum PetStatus {
     FOUND("achado"),
     LOST("perdido");
 
-    private String status;
+    private final String status;
 
     PetStatus(String status){
         this.status = status;

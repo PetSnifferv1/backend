@@ -29,9 +29,6 @@ public class SecurityFilter extends OncePerRequestFilter {
         if(token != null){
             var login = tokenService.validateToken(token);
             UserDetails user = userRepository.findByLogin(login);
-
-            // Removido logs sensíveis
-
             var authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
@@ -45,11 +42,6 @@ public class SecurityFilter extends OncePerRequestFilter {
         var authHeaderParameterValues = request.getParameterValues("imagem");
         var authHeaderAttributeNames = request.getAttributeNames();
 
-
-        System.out.println("authHeader:                 " + authHeader);
-        System.out.println("authHeaderContentType:      " + authHeaderContentType);
-        System.out.println("authHeaderParameterNames:   " + authHeaderParameterNames);
-        System.out.println("authHeaderAttributeNames:   " + authHeaderAttributeNames);
 
         if(authHeader == null) return null;
         return authHeader.replace("Bearer ", "");
