@@ -65,6 +65,7 @@ public class SecurityConfigurations {
                 "http://*.petsniffer.com.br",
                 "https://*.petsniffer.com.br",
                 "http://petsniffer-alb-298396905.us-east-1.elb.amazonaws.com",
+                "https://petsniffer-alb-298396905.us-east-1.elb.amazonaws.com",
                 "http://*.us-east-1.elb.amazonaws.com"
         ));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
