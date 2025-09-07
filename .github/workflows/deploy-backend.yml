@@ -6,7 +6,7 @@ on:
       - main
     paths:
 
-      - 'backend/**' ### Somente mudanças na pasta backend xx
+      - 'backend/**' ### Somente mudanças na pasta backend xxx
       - '.github/workflows/deploy-backend.yml'
       - 'backend/Dockerfile'
 
