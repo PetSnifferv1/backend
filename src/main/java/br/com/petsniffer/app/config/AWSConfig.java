@@ -14,8 +14,9 @@ import com.amazonaws.services.s3.AmazonS3ClientBuilder;
     public class AWSConfig {
         private final AmazonS3 s3Client;
 
-        public AWSConfig(@Value("${AWSACCESKEY}") String accessKey,
-                        @Value("${AWSSECRETKEY}") String secretKey,
+
+        public AWSConfig(@Value("${AWS_ACCESS_KEY_ID}") String accessKey,
+                        @Value("${AWS_SECRET_ACCESS_KEY}") String secretKey,
                         @Value("${AWS_REGION}") String region) {
             BasicAWSCredentials awsCreds = new BasicAWSCredentials(accessKey, secretKey);
 
