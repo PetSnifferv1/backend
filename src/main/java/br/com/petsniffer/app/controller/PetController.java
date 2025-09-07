@@ -25,7 +25,8 @@ import java.util.List;
         "http://localhost:5173",
         "http://www.petsniffer.com.br",
         "https://www.petsniffer.com.br",
-        "http://petsniffer-alb-298396905.us-east-1.elb.amazonaws.com"
+        "http://petsniffer-alb-298396905.us-east-1.elb.amazonaws.com",
+        "https://petsniffer-alb-298396905.us-east-1.elb.amazonaws.com"
 })
 
 @RestController()
