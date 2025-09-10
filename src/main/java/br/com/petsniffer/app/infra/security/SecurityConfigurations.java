@@ -29,30 +29,47 @@ public class SecurityConfigurations {
     private SecurityFilter securityFilter;
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity ) throws Exception {
         return httpSecurity
-                .csrf(csrf -> csrf.disable())
+                // Desativa a proteção CSRF, comum para APIs REST stateless.
+                .csrf(csrf -> csrf.disable( ))
+
+                // Garante que nenhuma sessão seja criada no servidor; cada requisição é independente.
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+
+                // Aplica sua configuração de CORS (Cross-Origin Resource Sharing).
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+
+                // Define as regras de autorização para os endpoints HTTP.
                 .authorizeHttpRequests(authorize -> authorize
+
+                        // --- ENDPOINTS PÚBLICOS ---
+                        // Rotas que qualquer pessoa pode acessar, sem necessidade de login.
+
+                        // 1. Autenticação: Permite o registro e login de usuários.
+                        //    A regra "/auth/**" já cobre /auth/login e /auth/register para todos os métodos (POST, OPTIONS, etc).
+                        .requestMatchers("/auth/**").permitAll()
+
+                        // 2. Visualização Pública: Permite que visitantes vejam pets públicos.
                         .requestMatchers(HttpMethod.GET, "/pets/public-pets").permitAll()
                         .requestMatchers(HttpMethod.GET, "/pets/search-by-location/**").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/pets/alter-pets/").permitAll()
-                        .requestMatchers(HttpMethod.PUT, "/pets/alter-pets/").permitAll()
-                        .requestMatchers(HttpMethod.DELETE, "/pets/delete-pets").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/pets/create-pets").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/pets/upload-imagem").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/files/**").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/fileup/**").permitAll()
+
+                        // 3. Health Check: Permite que o AWS Load Balancer verifique se a aplicação está saudável.
                         .requestMatchers("/actuator/**").permitAll()
-                        .requestMatchers("/auth/**").permitAll()
+
+
+                        // --- ENDPOINTS PRIVADOS ---
+                        // Qualquer outra requisição que não corresponda às regras acima exige autenticação.
+                        // Isso protegerá automaticamente seus endpoints de criar, alterar e deletar pets.
                         .anyRequest().authenticated()
                 )
-                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+
+                // Adiciona seu filtro de segurança JWT para validar tokens em requisições autenticadas.
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
+
                 .build();
     }
+
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
