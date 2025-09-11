@@ -1,33 +1,34 @@
 package br.com.petsniffer.app.controller;
 
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+
 import br.com.petsniffer.app.application.PetService;
 import br.com.petsniffer.app.domain.pets.Pet;
 import br.com.petsniffer.app.domain.pets.PetStatus;
 import br.com.petsniffer.app.domain.user.User;
 import br.com.petsniffer.app.interfaces.dtos.PetResponseDTO;
 import br.com.petsniffer.app.interfaces.dtos.PetUpdateDTO;
-import com.amazonaws.services.s3.AmazonS3;
 import jakarta.annotation.security.PermitAll;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
-import java.time.LocalDateTime;
-import java.util.List;
 
 @Transactional
-@CrossOrigin(origins = {
-        "http://localhost:5173",
-        "http://www.petsniffer.com.br",
-        "https://www.petsniffer.com.br",
-        "http://petsniffer-alb-298396905.us-east-1.elb.amazonaws.com",
-        "https://petsniffer-alb-298396905.us-east-1.elb.amazonaws.com"
-})
 
 @RestController()
 @RequestMapping("pets")
@@ -36,8 +37,7 @@ public class PetController {
     @Autowired
     private PetService petService;
 
-    private AmazonS3 s3Client;
-    private final String bucketName = "petsniffer-pets";
+    // Removed unused fields
 
     @PermitAll
     @PostMapping("/fileup")

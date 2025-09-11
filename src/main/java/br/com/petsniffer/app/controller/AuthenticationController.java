@@ -13,7 +13,14 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import br.com.petsniffer.app.domain.user.User;
 import br.com.petsniffer.app.infra.security.TokenService;
@@ -23,14 +30,6 @@ import br.com.petsniffer.app.interfaces.dtos.RegisterDTO;
 import br.com.petsniffer.app.repositories.PetRepository;
 import br.com.petsniffer.app.repositories.UserRepository;
 import jakarta.validation.Valid;
-@CrossOrigin(origins = {
-        "http://localhost:5173",
-        "http://www.petsniffer.com.br",
-        "https://www.petsniffer.com.br",
-        "http://petsniffer-alb-298396905.us-east-1.elb.amazonaws.com"
-        "https://petsniffer-alb-298396905.us-east-1.elb.amazonaws.com"
-
-})
 @RestController
 @RequestMapping("auth")
 public class AuthenticationController {
@@ -47,7 +46,7 @@ public class AuthenticationController {
     private PasswordEncoder passwordEncoder;
 
 
-    private AuthenticationController authenticationController;
+    // Removed unused self-reference field
 
 
     @PostMapping("/login")

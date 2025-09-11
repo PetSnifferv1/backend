@@ -75,15 +75,14 @@ public class SecurityConfigurations {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOriginPatterns(List.of(
+                // Dev
                 "http://localhost:*",
-                "http://petsniffer.com.br",
-                "http://www.petsniffer.com.br",
+                "http://127.0.0.1:*",
+                // Production (HTTPS only)
+                "https://petsniffer.com.br",
                 "https://www.petsniffer.com.br",
-                "http://*.petsniffer.com.br",
                 "https://*.petsniffer.com.br",
-                "http://petsniffer-alb-298396905.us-east-1.elb.amazonaws.com",
-                "https://petsniffer-alb-298396905.us-east-1.elb.amazonaws.com",
-                "http://*.us-east-1.elb.amazonaws.com"
+                "https://petsniffer-alb-298396905.us-east-1.elb.amazonaws.com"
         ));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("Authorization", "Content-Type", "Accept", "Origin", "X-Requested-With"));
